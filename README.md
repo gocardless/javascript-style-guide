@@ -1,26 +1,26 @@
-# The GoCardless JavaScript styleguide.
+# The GoCardless JavaScript style guide
 
-This styleguide is for general JavaScript conventions and styles that we follow across all our JavaScript. For Angular specific conventions, refer to the [Angular Style Guide](https://github.com/gocardless/angularjs-style-guide).
+This style guide is for general JavaScript conventions and styles that we follow across all our JavaScript. For Angular specific conventions, refer to the [Angular Style Guide](https://github.com/gocardless/angularjs-style-guide).
 
 ## Strings
 
 #### Use single quotes for all strings.
 
-_Why_: in JavaScript there is no difference between single and double quotes. Rather than have a mix throughout a codebase, it is best to pick one and stick to it.
+_Why_: in JavaScript there is no difference between single and double quotes. Rather than have a mix throughout a code base, pick one and stick to it.
 
 #### Keep line length at around 80 characters.
 
-_Why_: this encourages lines that do less, and to extract variables and functions where a line is longer than required.
+_Why_: this encourages developers to write lines that do less, and extract variables and functions where a line is longer than required.
 
-We don't have a set 80 char hard limit because sometimes it's more readable to let a line be 85 characters rather than break it up, but in general you should aim for 80 characters or less.
+We don’t have an 80 char hard limit because sometimes it’s more readable to let a line be 85 characters rather than break it up, but in general you should aim for 80 characters or less.
 
-## Asynchronous Code and Promises
+## Async
 
-#### Ensure that each promise chain has at least one `catch`
+#### Ensure that each promise chain has at least one `catch`.
 
-_Why_: ensures that error handling is thought of and dealt with in every case.
+_Why_: ensures that errors are always handled.
 
-```javascript
+```js
 // bad
 doSomething().then(...)
 
@@ -28,11 +28,11 @@ doSomething().then(...)
 doSomething().then(...).catch(...)
 ```
 
-#### Prefer multiple `then` callbacks over one `then` callback which performs multiple operations
+#### Prefer multiple `then` callbacks over one `then` callback which performs multiple operations.
 
-_Why_: this keeps promise chains easier to scan and understand, and keeps the callback functions smaller.
+_Why_: this keeps promise chains easier to read, and keeps callback functions smaller.
 
-```javascript
+```js
 // bad
 doSomething().then(function processSomething(data) {
   // do something
@@ -44,21 +44,21 @@ doSomething().then(function processSomething(data) {
 doSomething().then(function processSomething(data) {
  // do something
  return data;
-}).then(function(data) {
+}).then(function somethingElse(data) {
  // do something else
  return data;
-}).then(function(data) {
+}).then(function anotherThing(data) {
   // and so on
 });
 ```
 
 ## Functions
 
-#### Name functions that are given as a callback
+#### Name functions that are given as a callback.
 
-_Why_: This helps when debugging by improving errors and stack traces,  and keeps code more self documenting.
+_Why_: the function name replaces “anonymous function” in stack traces, which makes debugging easier. Naming functions also helps code be self documenting.
 
-```javascript
+```js
 // bad
 createUser().then(function() {
 });
@@ -68,27 +68,29 @@ createUser().then(function userCreatedSuccesfully() {
 });
 ```
 
-#### Prefer function declarations over function expressions
+#### Prefer function declarations to function expressions.
 
-_Why_: Function declarations are easier to pick out in larger code files.
+_Why_: function declarations are easier to pick out in larger code files.
 
 #### Ensure that the function is defined above its first usage.
 
-_Why_: it can be very confusing to see a function used above its declaration
+_Why_: hoisting enables JavaScript files to have their most important content at the top. However, we’re used to reading top to bottom and left to right, so this can be confusing.
 
-```javascript
-// this will work, but is very unclear
+```js
+// this will work but is unclear
 thing();
+
+// more code
 
 function thing() {
 }
 ```
 
-#### Prefer guard clauses over nested function bodies
+#### Prefer guard clauses to nested function bodies.
 
-_Why_: indenting an entire function body makes it harder to read and follow. Exiting out early keeps the indent clear and code cleaner.
+_Why_: indenting an entire function body makes it harder to read. Providing a base case early keeps the code cleaner.
 
-```javascript
+```js
 // bad
 function doSomethingOnOddNumbers(x) {
   if (x % 2 === 1) {
@@ -103,9 +105,9 @@ function doSomethingOnOddNumbers(x) {
 }
 ```
 
-#### Leave a space after the closing `)` and before the opening `{`, but never before the opening `(`:
+#### Leave a space after the closing `)` and before the opening `{`, but never before the opening `(`.
 
-```javascript
+```js
 // bad
 function doSomething () {
 }
@@ -119,21 +121,21 @@ function doSomething() {
 }
 ```
 
-#### When a function has arguments that make the line longer than ~80 characters, split it into one parameter per line
+#### When a function has arguments that make the line longer than ~80 characters, split it into one parameter per line.
 
-_Why_: this is partly to keep lines below 80 characters, but also for readability.
+_Why_: keeps lines below 80 characters, after which readability declines.
 
-```javascript
+```js
 // good
-function someController(foo, bar, baz) {
+function SomeController(foo, bar, baz) {
 }
 
 // bad
-function someController(foo, bar, baz, abc, def, ghi, jkl, mno, pqr, stu, vwx, yz) {
+function SomeController(foo, bar, baz, abc, def, ghi, jkl, mno, pqr, stu, vwx, yz) {
 }
 
 // good
-function someController(
+function SomeController(
   foo,
   bar,
   baz,
@@ -152,11 +154,11 @@ function someController(
 
 ## Objects
 
-#### Leave a trailing comma in object literal definitions
+#### Leave a trailing comma in object literal definitions.
 
-_Why_: makes the diff much clearer when you add a new line, and easier to reorder existing lines without editing them.
+_Why_: easier to reorder existing lines without editing them, and makes new lines clearer in the diff.
 
-```javascript
+```js
 // bad
 {
   foo: 2,
@@ -172,11 +174,11 @@ _Why_: makes the diff much clearer when you add a new line, and easier to reorde
 
 ## Arrays
 
-#### When using array methods such as `forEach`, `map`, etc, pass functions in if possible
+#### When using array methods such as `forEach`, `map`, etc, pass function names in if possible.
 
-_Why_: avoids creating new functions just for the sake of it.
+_Why_: avoids unnecessary function wrapping.
 
-```javascript
+```js
 function isOdd(x) {
   return x % 2 === 1;
 }
@@ -190,11 +192,11 @@ function isOdd(x) {
 [1, 2, 3].filter(isOdd);
 ```
 
-#### Leave a trailing comma in Array literal definitions that are over multiple lines
+#### Leave a trailing comma in array literals that span multiple lines.
 
-_Why_: it's easier to reorder items and the diff is cleaner when a new item is added
+_Why_: it’s easier to reorder items and the diff is cleaner when a new item is added.
 
-```javascript
+```js
 // bad
 [
   'jack',
@@ -210,11 +212,11 @@ _Why_: it's easier to reorder items and the diff is cleaner when a new item is a
 
 ## Variables
 
-#### Don't declare a variable within a block
+#### Don’t declare a variable within a block.
 
-_Why_: it's unclear upon scanning where the variable is defined.
+_Why_: it’s unclear where the variable is defined.
 
-```javascript
+```js
 // bad
 if (x) {
   var y = 2;
@@ -231,41 +233,41 @@ if (x) {
 }
 ```
 
-#### Prefer ternary operators for very succinct conditionals which change the initial value of a variable
+#### Use ternary operators for very succinct conditionals which change the initial value of a variable.
 
-_Why_: when used with small conditionals, ternary operators are a much more concise way to express them
+_Why_: ternary operators are concise when used with small conditionals.
 
-Do not use a ternary where the condition or either branch of the condition are complex. If in doubt, do not use a ternary operator.
+Use an `if` statement if any branch of the condition is complex.
 
-```javascript
+```js
 var y = x ? 2 : 3;
 ```
 
-#### Declare one variable per line
+#### One variable per line.
 
 _Why_: adding a new variable does not mean other lines need to be edited, and existing lines can be reordered easily.
 
-```javascript
+```js
 // bad
 var x, y, z;
 
 // good
 var x;
 var y;
-var z
+var z;
 ```
 
 ## Conditionals
 
 #### Always prefer `===` and `!==` when comparing.
 
-_Why_: avoid any bugs with JavaScript's often unintuitive equality rules.
+_Why_: eliminates errors caused by JavaScript’s complex equality and coercion rules.
 
 #### Use `==` or `!=` only when checking a variable is `undefined` or `null`:
 
-_Why_: using `===` means checking for both `undefined` and `null`, whereas `==` lets you only check for one.
+_Why_: using `==` checks for both `undefined` and `null`, whereas `===` only checks for one.
 
-```javascript
+```js
 // bad
 if (x === undefined || x === null) {}
 
@@ -273,46 +275,46 @@ if (x === undefined || x === null) {}
 if (x == null) {}
 ```
 
-#### Prefer `hasOwnProperty` for checking if a key exists within an object
+#### Prefer `hasOwnProperty` for checking if a key exists within an object.
 
-_Why_: keys that have a falsey value but are still present might slip through the check or result in false positives
+_Why_: keys that have a falsey value but are still present might result in false positives.
 
-```javascript
+```js
 var thing = { count: 0 };
 
-if (!thing.count) // will evaluate to true, but we don't want it to
+if (!thing.count) // will evaluate to true, but we don’t want it to
 
-if (!thing.hasOwnProperty("count")) // will evaluate to false, which is what we want
+if (!thing.hasOwnProperty('count')) // will evaluate to false, which is what we want
 ```
 
-#### Wrap a conditional in braces, unless it's short enough to fit comfortably on one line.
+#### Wrap a conditional in braces if it’s > 1 line long.
 
-_Why_: conditionals without braces over multiple lines can easily be misconstrued, only the first line after them is part of the conditional.
+_Why_: conditionals without braces over multiple lines can easily be misconstrued.
 
-```javascript
+```js
+// bad
+if (something) { x = true }
+
+// good
+if (something) x = true;
+
 // bad
 if (something)
   doSomethingElse();
-  doAnotherThing(); // <-- not part of the conditional!
+  doAnotherThing(); // <- not part of the conditional!
 
 // good
 if (something) {
   doSomethingElse();
   doAnotherThing(); 
 }
-
-// bad
-if (something) { x = true }
-
-// good
-if (something) x = true;
 ```
 
-#### Leave a space between `if` and the opening `(`:
+#### Leave a space between `if` and the opening `(`.
 
 _Why_: makes it easier to pick out `if`s in a large code file.
 
-```javascript
+```js
 // bad
 if(foo)
 
@@ -324,11 +326,11 @@ if (foo)
 
 ## `=>` functions
 
-#### Prefer "fat arrow" functions when the function is small enough to fit on one line
+#### Prefer “fat arrow” functions when the function is small enough to fit on one line, or when the function’s job is to return the result of an expression.
 
-_Why_: they are more concise and readable
+_Why_: they are more concise and readable, and implicitly return when the body is an expression.
 
-```javascript
+```js
 // bad
 [1, 2, 3].map(function(x) { return x * 2 });
 
@@ -336,11 +338,11 @@ _Why_: they are more concise and readable
 [1, 2, 3].map((x) => x * 2);
 ```
 
-#### Functions that span multiple lines should be function expressions, not arrow functions.
+#### Use function expressions when the function body is a block.
 
-_Why_: arrow functions become harder to follow over multiple lines, and the `return` then becomes explicit.
+_Why_: an arrow function that spans multiple lines requires a block and an explicit return statement. Therefore, using an arrow function offers a minimally shorter expression at the expense of losing the function name in a stack trace.
 
-```javascript
+```js
 // bad
 [1, 2, 3].map((x) => {
   // do lots of things
@@ -358,9 +360,9 @@ _Why_: arrow functions become harder to follow over multiple lines, and the `ret
 
 #### Always wrap arrow function arguments in brackets.
 
-_Why_: whilst they are not needed when only taking one argument, it's clearer to just always include them.
+_Why_: they aren’t needed when the function only takes one parameter, but it’s clearer to always include them.
 
-```javascript
+```js
 // bad
 [1, 2, 3].map(x => x * 2);
 
@@ -368,11 +370,11 @@ _Why_: whilst they are not needed when only taking one argument, it's clearer to
 [1, 2, 3].map((x) => x * 2);
 ```
 
-#### In tests, prefer arrow functions over expressions when defining blocks
+#### In tests prefer arrow functions to function expressions.
 
-_Why_: keeps tests cleaner and easier to pick out the actual assertions
+_Why_: keeps tests cleaner and easier to pick out the actual assertions.
 
-```javascript
+```js
 // bad
 it('does a thing', function() {
 });
@@ -384,13 +386,13 @@ it('does a thing', () => {
 
 ## Strings
 
-#### Prefer ES6 string interpolation over concatenation
+#### Prefer ES6 string interpolation to concatenation.
 
-_Why_: easier to follow and less typing of awkward quotes and spaces. Easier to see what the final string will look like.
+_Why_: easier to read.
 
 ```js
 // bad
-var fullName = firstName + " " + lastName;
+var fullName = firstName + ' ' + lastName;
 
 // good
 var fullName = `${firstName} ${lastName}`;
@@ -398,11 +400,9 @@ var fullName = `${firstName} ${lastName}`;
 
 ## Function Arguments
 
-#### Use the spread operator over converting the `arguments` object:
+#### Use the spread operator over converting the `arguments` object.
 
-_Why_: cleaner and doesn't require converting the `arguments` object explicitly.
-
-```javascript
+```js
 // bad
 function foo() {
   var args = [].slice.call(arguments);
@@ -415,11 +415,11 @@ function foo(...args) {
 
 ## ES6 Modules
 
-#### Only use relative paths when descending, else prefer absolute paths.
+#### Use relative paths when the target is a descendant of the path declaration, else prefer absolute paths.
 
-_Why_: easier to see where code is coming from when importing it
+_Why_: easier to see a file’s position, and prevents many parent directory operators.
 
-```javascript
+```js
 // bad
 import {foo} from '../../service/foo';
 
@@ -432,17 +432,17 @@ import {foo} from './foo';
 
 ## Constants
 
-#### For now, don't use constants
+#### For now, don’t use `const`.
 
-_Why_: they are not properly implemented by Traceur and end up just being `var`s anyway.
+_Why_: they are not properly implemented by Traceur and end up just being `var`s.
 
-#### To define a "constant", define a variable but name it in uppercase:
+#### To indicate a variable should be treated like a constant, use upper snake case.
 
-_Why_: the uppercase convention indicates that the variable should be treated like a constant.
+_Why_: the uppercase convention indicates that the variable should be treated as a constant.
 
 You should __never__ modify a constant, or a variable named like one!
 
-```javascript
+```js
 // bad
 const apiUrl = 'http://example.com';
 
@@ -455,7 +455,7 @@ API_URL = API_URL + '/new';
 
 ## `let`
 
-#### Do not use the Traceur, 6to5 or similar implementations of `let`
+#### Do not use the Traceur, 6to5 or similar implementations of `let`.
 
-_Why_: they end up being implemented as variables anyway
+_Why_: similarly to `const`, they end up being implemented as variables.
 

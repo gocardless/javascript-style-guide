@@ -34,14 +34,14 @@ _Why_: this keeps promise chains easier to scan and understand, and keeps the ca
 
 ```javascript
 // bad
-doSomething().then(function(data) {
+doSomething().then(function processSomething(data) {
   // do something
   // do something else
   // do something else else
 });
 
 // good
-doSomething().then(function(data) {
+doSomething().then(function processSomething(data) {
  // do something
  return data;
 }).then(function(data) {
@@ -446,12 +446,16 @@ You should __never__ modify a constant, or a variable named like one!
 // bad
 const apiUrl = 'http://example.com';
 
+// good
 var API_URL = 'http://example.com';
+
+// very bad!
+API_URL = API_URL + '/new';
 ```
 
 ## `let`
 
 #### Do not use the Traceur, 6to5 or similar implementations of `let`
 
-_Why_: they end up being implemented as variables anyway.
+_Why_: they end up being implemented as variables anyway
 

@@ -2,6 +2,17 @@
 
 This style guide is for general JavaScript conventions and styles that we follow across all our JavaScript. For Angular specific conventions, refer to the [Angular Style Guide](https://github.com/gocardless/angularjs-style-guide).
 
+## Browser Support
+
+The projects we work on support the following browsers:
+
+- Chrome 39+
+- Safari 7+
+- Firefox 33+
+- IE10+
+
+Be aware of this when reading the guide - some of the JS shown here may not work in older versions.
+
 ## Strings
 
 #### Use single quotes for all strings.

@@ -407,6 +407,8 @@ _Why_: they arenâ€™t needed when the function only takes one parameter, but itâ€
 
 #### In tests prefer arrow functions to function expressions.
 
+Unfortunately our e2e tests run in Node.js, so don't support arrow functions (yet). When they do, we'll prefer to use them there too.
+
 _Why_: keeps tests cleaner and easier to pick out the actual assertions.
 
 ```js
@@ -447,6 +449,11 @@ function foo() {
 function foo(...args) {
 }
 ```
+
+Something about Spread literal?
+
+[...arrayLike].map...
+
 
 ## ES6 Modules
 

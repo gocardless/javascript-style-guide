@@ -450,11 +450,6 @@ function foo(...args) {
 }
 ```
 
-Something about Spread literal?
-
-[...arrayLike].map...
-
-
 ## ES6 Modules
 
 #### Use relative paths when the target is a descendant of the path declaration, else prefer absolute paths.

@@ -203,6 +203,30 @@ function isOdd(x) {
 [1, 2, 3].filter(isOdd);
 ```
 
+#### Never mutate the array or objects within an array in a `forEach`, `map` or similar.
+
+_Why_: JavaScript's object mutation can be very implicit and easy to miss. It's much better to have slightly more verbose but much clearer code.
+
+```js
+// bad -  payments array has been mutated, not obvious
+payments.forEach(function(payment) {
+  payment.id = 'ABC123'
+});
+
+// bad - the original payments array is mutated
+payments.map(function(payment) {
+  payment.id = 'ABC123';
+});
+
+// good - don't mutate the array, but create and modify a new one:
+payments = _.cloneDeep(payments).map(function(payment) {
+  payment.id = 'ABC123';
+  return payment;
+});
+```
+
+In practice we may not use `_.cloneDeep` - alter the above code as appropriate based on the libraries available.
+
 #### Leave a trailing comma in array literals that span multiple lines.
 
 _Why_: it’s easier to reorder items and the diff is cleaner when a new item is added.

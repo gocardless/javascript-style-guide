@@ -165,11 +165,17 @@ function SomeController(
 
 ## Objects
 
-#### Leave a trailing comma in object literal definitions.
+#### When an object literal has more than one property, split it into one property per line, leaving a trailing comma.
 
-_Why_: easier to reorder existing lines without editing them, and makes new lines clearer in the diff.
+_Why_: keeps lines below 80 characters, after which readability declines. Trailing commas make it easier to reorder existing lines without editing them, and makes new lines clearer in the diff.
 
 ```js
+// good
+{ foo: 2 }
+
+// bad
+{ foo: 2, bar: 3 }
+
 // bad
 {
   foo: 2,

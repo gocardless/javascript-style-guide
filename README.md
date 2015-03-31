@@ -25,6 +25,22 @@ _Why_: this encourages developers to write lines that do less, and extract varia
 
 We don’t have an 80 char hard limit because sometimes it’s more readable to let a line be 85 characters rather than break it up, but in general you should aim for 80 characters or less.
 
+#### Use `String.prototype.includes` to check for substrings
+
+_Why_: it's intent is much clearer than `indexOf`, and it is included as part of the ES6 specification
+
+In a JS project that is transpiled using Traceur, Babel or similar, use the new `String.prototype.includes` method:
+
+```js
+// bad
+if (str.indexOf('foo') > -1) {
+}
+
+// good
+if (str.includes('foo')) {
+}
+```
+
 ## Async
 
 #### Ensure that each promise chain has at least one `catch`.
@@ -249,6 +265,22 @@ _Why_: it’s easier to reorder items and the diff is cleaner when a new item is
   'jack',
   'max',
 ]
+```
+
+#### Prefer LoDash's `_.includes` method to test for Array inclusion
+
+_Why_: its intent is much clearer than using `indexOf`.
+
+If LoDash is available and included in the project, `_.includes` is much easier to read and cleaner to use than `indexOf`.
+
+```js
+// bad
+if (names.indexOf('jack') > -1) {
+}
+
+// good
+if (_.includes(names, 'jack')) {
+}
 ```
 
 ## Variables

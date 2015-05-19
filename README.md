@@ -461,7 +461,7 @@ it('does a thing', () => {
 
 ## Strings
 
-#### Prefer ES6 string interpolation to concatenation.
+#### Prefer ES6 template strings to concatenation.
 
 _Why_: easier to read.
 

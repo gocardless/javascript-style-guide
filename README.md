@@ -15,9 +15,9 @@ Be aware of this when reading the guide - some of the JS shown here may not work
 
 ## Strings
 
-#### Use single quotes for all strings.
+#### Use backticks for all strings.
 
-_Why_: in JavaScript there is no difference between single and double quotes. Rather than have a mix throughout a code base, pick one and stick to it.
+_Why_: Using backticks allows you to use template-strings, and also allows the use of both single and double quotes without needing an escape character.
 
 #### Keep line length at around 80 characters.
 

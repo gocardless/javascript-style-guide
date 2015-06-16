@@ -528,9 +528,6 @@ var API_URL = 'http://example.com';
 API_URL = API_URL + '/new';
 ```
 
-## `let`
+## `let` and `const`
 
-#### Do not use the Traceur, 6to5 or similar implementations of `let`.
-
-_Why_: similarly to `const`, they end up being implemented as variables.
-
+Use them! Prefer `const` by default.

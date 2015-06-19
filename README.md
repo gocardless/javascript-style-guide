@@ -507,27 +507,10 @@ import {foo} from './foo';
 
 ## Constants
 
-#### For now, don’t use `const`.
-
-_Why_: they are not properly implemented by Traceur and end up just being `var`s.
-
-#### To indicate a variable should be treated like a constant, use upper snake case.
-
-_Why_: the uppercase convention indicates that the variable should be treated as a constant.
-
-You should __never__ modify a constant, or a variable named like one!
-
-```js
-// bad
-const apiUrl = 'http://example.com';
-
-// good
-var API_URL = 'http://example.com';
-
-// very bad!
-API_URL = API_URL + '/new';
-```
-
 ## `let` and `const`
 
 Use them! Prefer `const` by default.
+
+```js
+const apiUrl = 'http://example.com';
+```
